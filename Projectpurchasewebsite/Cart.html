@@ -123,12 +123,14 @@
     }
 
     // Purchase button functionality
-    document.querySelector(".continue-btn").addEventListener("click", function () {
-        alert("Thank you for your purchase!");
-        localStorage.removeItem("cart");
-        location.reload();
+     const continueBtn = document.querySelector(".continue-btn");
+        if (continueBtn) {
+            continueBtn.addeventListener("click", function (){
+                alert("Success!");
+                localStorage.removeItem("cart";
+                location.reload();
     });
-});
+}
 </script>
 
 </body>
