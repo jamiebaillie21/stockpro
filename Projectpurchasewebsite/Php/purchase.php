@@ -1,28 +1,22 @@
 <?php
-$servername = "54.159.206.66";
-$username = "root";
-$password = "root";
-$database = "Sales";
+require 'db.php';
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
+// Now you can use $pdo
+$stmt = $pdo->query("SELECT * FROM users");
+$users = $stmt->fetchAll();
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 // Get JSON data from the request
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (!empty($data)) {
     foreach ($data as $item) {
-        $Item = $conn->real_escape_string($item['name']);
+        $name = $conn->real_escape_string($item['name']);
         $Price = floatval($item['price']);
         $units = $conn->real_escape_string($item['image']);
-        $created_at = date("Y-m-d H:i:s");
+        
 
-        $sql = "INSERT INTO orders (item, Price, units, created_at) VALUES ('$name', '$Price', '$units', '$created_at')";
+        $sql = "INSERT INTO orders (product_name, price, quantity) VALUES ('$name', '$Price', '$units')";
 
         if (!$conn->query($sql)) {
             echo "Error: " . $sql . "<br>" . $conn->error;
