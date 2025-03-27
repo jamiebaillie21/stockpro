@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+
+<div class="order-summary">
+    <h2><span class="cart-icon">🛒</span> Your Order</h2>
+
+   
+        <button id="myButton">Click Me</button>
+
+        <script>
+            document.getElementById("myButton").addEventListener("click", function() {
+                fetch("Php/purchase.php")
+                    .then(response => response.text())
+                    .then(data => alert(data)); // Show response from PHP
+            });
+            </script>
+    
+    
+    <div class="order-details">
+       
+    <div class="order-total">
+        <strong>TOTAL</strong>
+        <strong>(GBP) <span class="total-cost"></span></strong>
+    </div>
+
+    <div class="product-details"></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const productDetails = document.querySelector(".product-details");
+    const totalCostElement = document.querySelector(".total-cost");
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart.length === 0) {
+        productDetails.innerHTML = "<p>Your cart is empty.</p>";
+        totalCostElement.textContent = "0.00";
+    } else {
+        // Group items by name
+        let groupedCart = {};
+        cart.forEach(item => {
+            if (groupedCart[item.name]) {
+                groupedCart[item.name].quantity += 1;
+            } else {
+                groupedCart[item.name] = { ...item, quantity: 1 };
+            }
+        });
+
+        let totalCost = 0;
+        productDetails.innerHTML = Object.values(groupedCart).map((item, index) => {
+            let itemTotal = parseFloat(item.price.replace("£", "")) * item.quantity;
+            totalCost += itemTotal;
+
+            return `
+                <div class="order-item">
+                    <img src="${item.image}" width="80" alt="${item.name}">
+                    <span>${item.name}</span>
+                    <span>£${itemTotal.toFixed(2)}</span>
+                    <div class="quantity-controls">
+                        <button class="decrease-btn" data-name="${item.name}">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="increase-btn" data-name="${item.name}">+</button>
+                    </div>
+                    <button class="remove-btn" data-name="${item.name}">Remove</button>
+                </div>
+            `;
+        }).join("");
+
+        totalCostElement.textContent = totalCost.toFixed(2);
+
+        // Handle quantity increase
+        document.querySelectorAll(".increase-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                let itemName = this.getAttribute("data-name");
+                cart.push(groupedCart[itemName]); // Add another instance
+                localStorage.setItem("cart", JSON.stringify(cart));
+                location.reload();
+            });
+        });
+
+        // Handle quantity decrease
+        document.querySelectorAll(".decrease-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                let itemName = this.getAttribute("data-name");
+                let itemIndex = cart.findIndex(item => item.name === itemName);
+                if (itemIndex !== -1) cart.splice(itemIndex, 1); // Remove one instance
+                localStorage.setItem("cart", JSON.stringify(cart));
+                location.reload();
+            });
+        });
+
+        // Handle item removal
+        document.querySelectorAll(".remove-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                let itemName = this.getAttribute("data-name");
+                cart = cart.filter(item => item.name !== itemName); // Remove all instances
+                localStorage.setItem("cart", JSON.stringify(cart));
+                location.reload();
+            });
+        });
+    }
+
+    // Purchase button functionality
+    document.querySelector(".continue-btn").addEventListener("click", function () {
+        alert("Thank you for your purchase!");
+        localStorage.removeItem("cart");
+        location.reload();
+    });
+});
+</script>
+
+</body>
+</html>

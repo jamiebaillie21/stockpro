@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products</title>
+    <link rel="stylesheet" href="allproducts.css">
+</head>
+<body>
+    <div>
+        <h1 class="h1">All Products</h1>
+    </div>
+
+    <h1 class="h2">
+        <a href="cart.html" class="cart-link">Cart</a> 
+        
+    </h1>
+
+    <div class="product-grid">
+        <!-- Monitors -->
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/SamsungOdessey.jpg" alt="Samsung Odessey">
+            </div>
+            <div class="product-info">
+                <h3>Samsung Odessey Monitor</h3>
+                <p class="price">£500</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/Zedge.jpg" alt="Zedge Monitor">
+            </div>
+            <div class="product-info">
+                <h3>Zedge Monitor</h3>
+                <p class="price">£100</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <!-- Graphics Cards -->
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/RTX4080.jpg" alt="NVIDIA RTX 4080">
+            </div>
+            <div class="product-info">
+                <h3>NVIDIA RTX 4080</h3>
+                <p class="price">£1200</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/RX7800XT.jpg" alt="AMD RX 7800 XT">
+            </div>
+            <div class="product-info">
+                <h3>AMD RX 7800 XT</h3>
+                <p class="price">£600</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <!-- Keyboards -->
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/LogitechGPro.jpg" alt="Logitech G Pro Keyboard">
+            </div>
+            <div class="product-info">
+                <h3>Logitech G Pro Keyboard</h3>
+                <p class="price">£130</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <!-- Mice -->
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/LogitechG502.jpg" alt="Logitech G502">
+            </div>
+            <div class="product-info">
+                <h3>Logitech G502 Mouse</h3>
+                <p class="price">£80</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <!-- CPUs -->
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/Ryzen7.jpg" alt="AMD Ryzen 7 7800X3D">
+            </div>
+            <div class="product-info">
+                <h3>AMD Ryzen 7 7800X3D</h3>
+                <p class="price">£400</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/Intel9.jpg" alt="Intel Core i9 13900K">
+            </div>
+            <div class="product-info">
+                <h3>Intel Core i9 13900K</h3>
+                <p class="price">£550</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <!-- Software -->
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/Windows11.jpg" alt="Windows 11 Pro">
+            </div>
+            <div class="product-info">
+                <h3>Windows 11 Pro</h3>
+                <p class="price">£200</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/AdobeCC.jpg" alt="Adobe Creative Cloud">
+            </div>
+            <div class="product-info">
+                <h3>Adobe Creative Cloud</h3>
+                <p class="price">£50/month</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/MSOffice.jpg" alt="Microsoft Office 365">
+            </div>
+            <div class="product-info">
+                <h3>Microsoft Office 365</h3>
+                <p class="price">£60/year</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const buttons = document.querySelectorAll(".product-item button");
+
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const product = this.parentElement;
+                    const name = product.querySelector("h3").textContent;
+                    const price = product.querySelector(".price").textContent;
+                    const image = product.parentElement.querySelector("img").src;
+
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+                    cart.push({ name, price, image });
+
+                    localStorage.setItem("cart", JSON.stringify(cart));
+
+                    alert(`${name} added to cart!`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

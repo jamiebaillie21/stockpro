@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Products</title>
+    <link rel="stylesheet" href="allproducts.css">
+</head>
+<body>
+    <div>
+        <h1 class="h1">Software Products</h1>
+    </div>
+
+    <h1 class="h2">
+        <a href="cart.html" class="cart-link">Cart</a>  
+    </h1>
+
+    <div class="product-grid">
+        <!-- Software -->
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/Windows11.jpg" alt="Windows 11 Pro">
+            </div>
+            <div class="product-info">
+                <h3>Windows 11 Pro</h3>
+                <p class="price">£200</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/AdobeCC.jpg" alt="Adobe Creative Cloud">
+            </div>
+            <div class="product-info">
+                <h3>Adobe Creative Cloud</h3>
+                <p class="price">£50/month</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/MSOffice.jpg" alt="Microsoft Office 365">
+            </div>
+            <div class="product-info">
+                <h3>Microsoft Office 365</h3>
+                <p class="price">£60/year</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const buttons = document.querySelectorAll(".product-item button");
+
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const product = this.parentElement;
+                    const name = product.querySelector("h3").textContent;
+                    const price = product.querySelector(".price").textContent;
+                    const image = product.parentElement.querySelector("img").src;
+
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+                    cart.push({ name, price, image });
+
+                    localStorage.setItem("cart", JSON.stringify(cart));
+
+                    alert(`${name} added to cart!`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

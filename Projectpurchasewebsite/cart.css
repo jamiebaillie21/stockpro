@@ -1,0 +1,77 @@
+.order-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Ensure image and product details stay together */
+.order-item img {
+    width: 60px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.order-item .product-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 16px;
+}
+
+/* Center align the quantity controls */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #f1f1f1;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.quantity-controls button {
+    background: #ddd;
+    border: none;
+    padding: 5px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.quantity-controls button:hover {
+    background: #ccc;
+}
+
+/* Fix alignment of the Remove button */
+.remove-btn {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.remove-btn:hover {
+    background: #d32f2f;
+}
+
+/* Ensure the order summary stays structured */
+.order-summary {
+    max-width: 400px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
