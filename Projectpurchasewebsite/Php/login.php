@@ -1,6 +1,9 @@
 <?php
 session_start();
 require 'db.php';
+
+$stmt = $pdo->query("SELECT * FROM users");
+$users = $stmt->fetchAll();
  
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $conn->real_escape_string($_POST['username']);
