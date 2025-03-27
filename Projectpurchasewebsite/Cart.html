@@ -125,13 +125,13 @@
     // Purchase button functionality
      const continueBtn = document.querySelector(".continue-btn");
         if (continueBtn) {
-            continueBtn.addeventListener("click", function (){
+            continueBtn.addEventListener("click", function (){
                 alert("Success!");
                 localStorage.removeItem("cart");
                 location.reload();
     });
 }
-}
+});
 </script>
 
 </body>
