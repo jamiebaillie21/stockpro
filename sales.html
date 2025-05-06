@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockPro Dashboard</title>
+    <link rel="stylesheet" href="sales.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2 class="logo">STOCKPRO</h2>
+            <ul>
+                <li class="active"><a href="Dailydashboard.html">Daily Dashboard</a></li>
+                <li><a href="Monthdash.html">Monthly Dashboard</a></li>
+                <li><a href="AnnualDashboard.html">Annual Dashboard</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Dashboard Container (For Proper Centering) -->
+        <div class="dashboard-container">
+            <main class="dashboard">
+                <header>
+                    <h3>Daily Dashboard</h3>
+                    <div class="month-selector">
+                        <label>Select a Month:</label>
+                        <select>
+                            <option>DEC</option>
+                        </select>
+                    </div>
+                </header>
+
+                <!-- KPI Cards -->
+                <div class="kpi-container">
+                    <div class="kpi-box">
+                        <h4>Sales</h4>
+                        <p>£495,848</p>
+                    </div>
+
+                    <div class="kpi-box">
+                        <h4>Profit</h4>
+                        <p>£500,000</p>
+                    </div>
+
+                    <div class="kpi-box">
+                        <h4>Most Purchased Item </h4>
+                        <p class="highlight">Dell Monitor</p>
+                    </div>
+
+                    <div class="kpi-box">
+                        
+                    </div>
+                </div>
+
+                <!-- Chart -->
+                <div class="chart-container">
+                    <canvas id="salesChart"></canvas>
+                </div>
+
+                <!-- Top Sales Reps -->
+                <div class="top-sales">
+                    <div class="sales-card first">
+                        <h3>1</h3>
+                        <p>Dell Monitor</p>
+                        <p class="sales-amount">£50,511</p>                        
+                    </div>
+                    <div class="sales-card second">
+                        <h3>2</h3>
+                        <p>Samsung Monitor</p>
+                        <p class="sales-amount">50,087</p>                        
+                    </div>
+                    <div class="sales-card third">
+                        <h3>3</h3>
+                        <p>HP Monitor</p>
+                        <p class="sales-amount">49,927</p>
+                        >
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
