@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor Products</title>
+    <link rel="stylesheet" href="allproducts.css">
+</head>
+<body>
+    <div>
+        <h1 class="h1">Monitor Products</h1>
+    </div>
+
+    <h1 class="h2">
+        <a href="Cart.html" class="cart-link">Cart</a>  
+    </h1>
+
+    <div class="product-grid">
+        <!-- Monitors -->
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/SamsungOdessey.jpg" alt="Samsung Odessey">
+            </div>
+            <div class="product-info">
+                <h3>Samsung Odessey Monitor</h3>
+                <p class="price">£500</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/Zedge.jpg" alt="Zedge Monitor">
+            </div>
+            <div class="product-info">
+                <h3>Zedge Monitor</h3>
+                <p class="price">£100</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/dell.jpg" alt="Dell Monitor">
+            </div>
+            <div class="product-info">
+                <h3>Dell Monitor</h3>
+                <p class="price">£70</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/HP.jpg" alt="HP Monitor">
+            </div>
+            <div class="product-info">
+                <h3>HP Monitor</h3>
+                <p class="price">£50</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const buttons = document.querySelectorAll(".product-item button");
+
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const product = this.parentElement;
+                    const name = product.querySelector("h3").textContent;
+                    const price = product.querySelector(".price").textContent;
+                    const image = product.parentElement.querySelector("img").src;
+
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+                    cart.push({ name, price, image });
+
+                    localStorage.setItem("cart", JSON.stringify(cart));
+
+                    alert(`${name} added to cart!`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
