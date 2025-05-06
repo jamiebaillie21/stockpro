@@ -1,0 +1,182 @@
+cart.html
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart</title>
+<link rel="stylesheet" href="cart.css">
+</head>
+<body>
+ 
+    <h1>Your Cart</h1>
+ 
+    <div id="cart-items"></div>
+<div id="total">Total: £<span id="total-price">0.00</span></div>
+ 
+    <button id="order-button">Order Now</button>
+ 
+    <script>
+
+    // Function to display the cart items from localStorage
+
+    function displayCart() {
+
+        const cartItemsContainer = document.getElementById("cart-items");
+
+        const totalPriceEl = document.getElementById("total-price");
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+ 
+        cartItemsContainer.innerHTML = "";
+
+        let total = 0;
+ 
+        cart.forEach((item, index) => {
+
+            if (!item.quantity) item.quantity = 1;
+
+            if (typeof item.price === "string") {
+
+                item.price = parseFloat(item.price.replace(/[^\d.]/g, ""));
+
+            }
+ 
+            const itemTotal = item.price * item.quantity;
+
+            total += itemTotal;
+ 
+            const itemEl = document.createElement("div");
+
+            itemEl.className = "cart-item";
+
+            itemEl.innerHTML = `
+<strong>${item.name}</strong><br>
+
+                Price: £${item.price.toFixed(2)}<br>
+
+                Quantity: <span id="qty-${index}">${item.quantity}</span>
+<button onclick="changeQuantity(${index}, -1)">-</button>
+<button onclick="changeQuantity(${index}, 1)">+</button>
+<button onclick="removeItem(${index})">Remove</button>
+<hr>
+
+            `;
+
+            cartItemsContainer.appendChild(itemEl);
+
+        });
+ 
+        totalPriceEl.textContent = total.toFixed(2);
+
+    }
+ 
+    // Function to change quantity
+
+    function changeQuantity(index, delta) {
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        cart[index].quantity += delta;
+
+        if (cart[index].quantity < 1) cart[index].quantity = 1;
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        displayCart();
+
+    }
+ 
+    // Function to remove an item
+
+    function removeItem(index) {
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        cart.splice(index, 1); // remove the item at index
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        displayCart();
+
+    }
+ 
+    // Display cart items when page loads
+
+    document.addEventListener("DOMContentLoaded", displayCart);
+ 
+    // Order button logic
+
+    document.getElementById("order-button").addEventListener("click", () => {
+
+        let user_id = localStorage.getItem("user_id");
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+
+        if (cart.length === 0) {
+
+            alert("Your cart is empty.");
+
+            return;
+
+        }
+ 
+        const payload = {
+
+            user_id: user_id,
+
+            items: cart
+
+        };
+ 
+        console.log("Sending payload to PHP:", payload);
+ 
+        fetch("purchase.php", {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type": "application/json"
+
+            },
+
+            body: JSON.stringify(payload)
+
+        })
+
+        .then(res => {
+
+            if (!res.ok) throw new Error("Network response was not OK");
+
+            return res.json();
+
+        })
+
+        .then(data => {
+
+            console.log("Response from PHP:", data);
+
+            alert(data.message);
+
+            localStorage.removeItem("cart");  // clear cart after successful order
+
+            displayCart(); // update the display (now empty)
+})
+
+        .catch(err => {
+
+            console.error("Error placing order:", err);
+
+            alert("Error placing order. Check console for details.");
+
+        });
+
+    });
+</script>
+ 
+</body>
+</html>
+ 

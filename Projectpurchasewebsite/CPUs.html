@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Products</title>
+    <link rel="stylesheet" href="allproducts.css">
+</head>
+<body>
+    <div>
+        <h1 class="h1">CPU Products</h1>
+    </div>
+
+    <h1 class="h2">
+        <a href="cart.html" class="cart-link">Cart</a>  
+    </h1>
+
+    <div class="product-grid">
+
+        <!-- CPUs -->
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/Ryzen7.jpg" alt="AMD Ryzen 7 7800X3D">
+            </div>
+            <div class="product-info">
+                <h3>AMD Ryzen 7 7800X3D</h3>
+                <p class="price">£400</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-image">
+                <img src="images/Intel9.jpg" alt="Intel Core i9 13900K">
+            </div>
+            <div class="product-info">
+                <h3>Intel Core i9 13900K</h3>
+                <p class="price">£550</p>
+                <button>Add to cart</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const buttons = document.querySelectorAll(".product-item button");
+
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const product = this.parentElement;
+                    const name = product.querySelector("h3").textContent;
+                    const price = product.querySelector(".price").textContent;
+                    const image = product.parentElement.querySelector("img").src;
+
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+                    cart.push({ name, price, image });
+
+                    localStorage.setItem("cart", JSON.stringify(cart));
+
+                    alert(`${name} added to cart!`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suppliers Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background: linear-gradient(to bottom, #0D1B2A, #1B263B, #415A77, #778DA9);
+        }
+
+        /* Sidebar Style */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            background-color: #1B263B;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 20px;
+            z-index: 2;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #f7f5f5;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color:  #415A77;
+        }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Menu Button Style (button that opens the sidebar) */
+        .menu-btn {
+            font-size: 30px;
+            color: #333;
+            padding: 20px;
+            background-color: #00D9FF;
+            border: none;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 3;
+            transition: 0.5s;
+        }
+
+        /* Content Style */
+        .content {
+            margin-left: 0;
+            transition: margin-left .5s;
+            padding: 20px;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* Header Section */
+        .header {
+            background-color: #1B263B;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #00D9FF;
+            font-size: 36px;
+            margin: 0;
+        }
+
+        /* Suppliers Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: #00D9FF;
+            background-color: #1B263B; 
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #00D9FF;
+        }
+
+        table th {
+            background-color: #1B263B;
+            color: #00D9FF;
+            font-size: 18px;
+        }
+
+        table tr:hover {
+            background-color: #415A77;
+        }
+
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 10px;
+            }
+
+            table th, table td {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">×</a>
+        <a href="Dashboard Page.html">Dashboard</a>
+        <a href="Inventory.html">Inventory</a>        
+        <a href="Monthdash.html">Sales</a>
+        <a href="Suppliers.html">Suppliers</a>        
+        <a href="Settings.html">Settings</a>
+    </div>
+
+    <!-- Menu Button to Open Sidebar -->
+    <button class="menu-btn" id="menuBtn" onclick="openNav()">☰</button>
+
+    <!-- Content Section -->
+    <div class="content">
+        <div class="header">
+            <h1>List of Suppliers</h1>
+        </div>
+
+
+        <!-- Suppliers Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Supplier ID</th>
+                    <th>Company Name</th>
+                    <th>Contact Person</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#SUP001</td>
+                    <td>ABC Supplies</td>
+                    <td>Jane Doe</td>
+                    <td>(555) 123-4567</td>
+                    <td>jane.doe@abc.com</td>
+                </tr>
+                <tr>
+                    <td>#SUP002</td>
+                    <td>XYZ Wholesalers</td>
+                    <td>John Smith</td>
+                    <td>(555) 987-6543</td>
+                    <td>john.smith@xyz.com</td>
+                </tr>
+                <tr>
+                    <td>#SUP003</td>
+                    <td>Global Trade Co.</td>
+                    <td>Mary Johnson</td>
+                    <td>(555) 678-9101</td>
+                    <td>mary.johnson@globaltrade.com</td>
+                </tr>
+                <tr>
+                    <td>#SUP004</td>
+                    <td>The PC Parts Company </td>
+                    <td>Stuart McFarlene</td>
+                    <td>(555) 975-9462</td>
+                    <td>s_mcfarlene@pcparts.com</td>
+                </tr>
+                <tr>
+                    <td>#SUP005</td>
+                    <td>Best Electronics</td>
+                    <td>Haley Thompson</td>
+                    <td>(555) 534-7565</td>
+                    <td>thompson@belectronic.com</td>
+                </tr>
+                <tr>
+                    <td>#SUP006</td>
+                    <td>Computers Are Us</td>
+                    <td>Paul Reilly</td>
+                    <td>(555) 656-2752</td>
+                    <td>paul_reilly@cau.com</td>
+                </tr>
+                <tr>
+                    <td>#SUP007</td>
+                    <td>QuantumVault Technologies</td>
+                    <td>Patrick Jones</td>
+                    <td>(555) 843-0368</td>
+                    <td>jones.p@quantumtechno.com</td>
+                </tr>
+                <tr>
+                    <td>#SUP008</td>
+                    <td>VortexSpire Hardware</td>
+                    <td>Susan Mills</td>
+                    <td>(555) 732-1742</td>
+                    <td>s_mills@vortexspire.com</td>
+                </tr>
+                <tr>
+                    <td>#SUP009</td>
+                    <td>CoreNest Supplies</td>
+                    <td>Sean Wright</td>
+                    <td>(555) 353-8641</td>
+                    <td>seanwright@corenestsupplies.com</td>
+                </tr>
+                <tr>
+                    <td>#SUP010</td>
+                    <td>TitanForge Technologies</td>
+                    <td>Carol Quinn</td>
+                    <td>(555) 664-8563</td>
+                    <td>c.quinn@titanforge.com</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Function to open the sidebar
+        function openNav() {
+            document.getElementById("mySidebar").style.left = "0";
+            document.querySelector(".content").style.marginLeft = "250px";
+            document.getElementById("menuBtn").style.left = "250px";  // Move the button with the sidebar
+        }
+
+        // Function to close the sidebar
+        function closeNav() {
+            document.getElementById("mySidebar").style.left = "-250px";
+            document.querySelector(".content").style.marginLeft = "0";
+            document.getElementById("menuBtn").style.left = "20px";  // Return button to original position
+        }
+    </script>
+
+</body>
+</html>
