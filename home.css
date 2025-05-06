@@ -1,0 +1,76 @@
+
+
+
+/* General Styles */
+body {
+    margin: 0;
+    padding: o;
+    height: 100vh;
+    width: 100vw;
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    background-image: url(images/background1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  .h1 {
+    text-align: center;
+    font-size: 3rem;
+    color:whitesmoke;
+    margin: 20px 0;
+  }
+
+  .h2{
+
+    text-align: right;
+    color: whitesmoke;
+    font-size: 1rem;
+    padding-right: 50px;
+  }
+
+  .h2:hover{
+display: block;
+cursor: pointer;
+
+  }
+
+  .cart-link{
+
+    text-decoration: none;
+    color: whitesmoke;
+
+  }
+  /* Navigation Bar Styles */
+  .nav-bar {
+    margin-top: 75px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+    gap: 30px; /* Space between items */
+  }
+  
+  .nav-links li {
+    font-size: 1.5rem;
+  }
+  
+  .nav-links a {
+    font-family: Cambria, serif;
+    text-decoration: none; /* Remove underline */
+    color: whitesmoke;
+    font-style: italic;
+    transition: color 0.3s ease; /* Hover effect */
+  }
+  
+  .nav-links a:hover {
+    color: gray;
+  }
+  
+  
