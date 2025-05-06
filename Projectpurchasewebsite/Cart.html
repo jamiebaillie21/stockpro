@@ -1,138 +1,182 @@
+cart.html
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Summary</title>
-    <link rel="stylesheet" href="cart.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart</title>
+<link rel="stylesheet" href="cart.css">
 </head>
 <body>
-
-<div class="order-summary">
-    <h2><span class="cart-icon">🛒</span> Your Order</h2>
-
-   
-        <button id="myButton">Order Now</button>
-
-        <script>
-    document.getElementById("myButton").addEventListener("click", function () {
-    const cartItems = [
-        {
-            name: "AMD RX 7800 XT",
-            price: 600.00,
-            image: "gpu.jpg"
-        },
-        // more items...
-    ];
  
-    fetch("Php/purchase.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(cartItems)
-    })
-        .then(response => response.text())
-        .then(data => alert(data));
-});
-            </script>
-    
-    
-    <div class="order-details">
-       
-    <div class="order-total">
-        <strong>TOTAL</strong>
-        <strong>(GBP) <span class="total-cost"></span></strong>
-    </div>
+    <h1>Your Cart</h1>
+ 
+    <div id="cart-items"></div>
+<div id="total">Total: £<span id="total-price">0.00</span></div>
+ 
+    <button id="order-button">Order Now</button>
+ 
+    <script>
 
-    <div class="product-details"></div>
-</div>
+    // Function to display the cart items from localStorage
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const productDetails = document.querySelector(".product-details");
-    const totalCostElement = document.querySelector(".total-cost");
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    function displayCart() {
 
-    if (cart.length === 0) {
-        productDetails.innerHTML = "<p>Your cart is empty.</p>";
-        totalCostElement.textContent = "0.00";
-    } else {
-        // Group items by name
-        let groupedCart = {};
-        cart.forEach(item => {
-            if (groupedCart[item.name]) {
-                groupedCart[item.name].quantity += 1;
-            } else {
-                groupedCart[item.name] = { ...item, quantity: 1 };
+        const cartItemsContainer = document.getElementById("cart-items");
+
+        const totalPriceEl = document.getElementById("total-price");
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+ 
+        cartItemsContainer.innerHTML = "";
+
+        let total = 0;
+ 
+        cart.forEach((item, index) => {
+
+            if (!item.quantity) item.quantity = 1;
+
+            if (typeof item.price === "string") {
+
+                item.price = parseFloat(item.price.replace(/[^\d.]/g, ""));
+
             }
-        });
+ 
+            const itemTotal = item.price * item.quantity;
 
-        let totalCost = 0;
-        productDetails.innerHTML = Object.values(groupedCart).map((item, index) => {
-            let itemTotal = parseFloat(item.price.replace("£", "")) * item.quantity;
-            totalCost += itemTotal;
+            total += itemTotal;
+ 
+            const itemEl = document.createElement("div");
 
-            return `
-                <div class="order-item">
-                    <img src="${item.image}" width="80" alt="${item.name}">
-                    <span>${item.name}</span>
-                    <span>£${itemTotal.toFixed(2)}</span>
-                    <div class="quantity-controls">
-                        <button class="decrease-btn" data-name="${item.name}">-</button>
-                        <span>${item.quantity}</span>
-                        <button class="increase-btn" data-name="${item.name}">+</button>
-                    </div>
-                    <button class="remove-btn" data-name="${item.name}">Remove</button>
-                </div>
+            itemEl.className = "cart-item";
+
+            itemEl.innerHTML = `
+<strong>${item.name}</strong><br>
+
+                Price: £${item.price.toFixed(2)}<br>
+
+                Quantity: <span id="qty-${index}">${item.quantity}</span>
+<button onclick="changeQuantity(${index}, -1)">-</button>
+<button onclick="changeQuantity(${index}, 1)">+</button>
+<button onclick="removeItem(${index})">Remove</button>
+<hr>
+
             `;
-        }).join("");
 
-        totalCostElement.textContent = totalCost.toFixed(2);
+            cartItemsContainer.appendChild(itemEl);
 
-        // Handle quantity increase
-        document.querySelectorAll(".increase-btn").forEach(button => {
-            button.addEventListener("click", function () {
-                let itemName = this.getAttribute("data-name");
-                cart.push(groupedCart[itemName]); // Add another instance
-                localStorage.setItem("cart", JSON.stringify(cart));
-                location.reload();
-            });
         });
+ 
+        totalPriceEl.textContent = total.toFixed(2);
 
-        // Handle quantity decrease
-        document.querySelectorAll(".decrease-btn").forEach(button => {
-            button.addEventListener("click", function () {
-                let itemName = this.getAttribute("data-name");
-                let itemIndex = cart.findIndex(item => item.name === itemName);
-                if (itemIndex !== -1) cart.splice(itemIndex, 1); // Remove one instance
-                localStorage.setItem("cart", JSON.stringify(cart));
-                location.reload();
-            });
-        });
-
-        // Handle item removal
-        document.querySelectorAll(".remove-btn").forEach(button => {
-            button.addEventListener("click", function () {
-                let itemName = this.getAttribute("data-name");
-                cart = cart.filter(item => item.name !== itemName); // Remove all instances
-                localStorage.setItem("cart", JSON.stringify(cart));
-                location.reload();
-            });
-        });
     }
+ 
+    // Function to change quantity
 
-    // Purchase button functionality
-     const continueBtn = document.querySelector(".continue-btn");
-        if (continueBtn) {
-            continueBtn.addEventListener("click", function (){
-                alert("Success!");
-                localStorage.removeItem("cart");
-                location.reload();
+    function changeQuantity(index, delta) {
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        cart[index].quantity += delta;
+
+        if (cart[index].quantity < 1) cart[index].quantity = 1;
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        displayCart();
+
+    }
+ 
+    // Function to remove an item
+
+    function removeItem(index) {
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        cart.splice(index, 1); // remove the item at index
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        displayCart();
+
+    }
+ 
+    // Display cart items when page loads
+
+    document.addEventListener("DOMContentLoaded", displayCart);
+ 
+    // Order button logic
+
+    document.getElementById("order-button").addEventListener("click", () => {
+
+        let user_id = localStorage.getItem("user_id");
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+
+        if (cart.length === 0) {
+
+            alert("Your cart is empty.");
+
+            return;
+
+        }
+ 
+        const payload = {
+
+            user_id: user_id,
+
+            items: cart
+
+        };
+ 
+        console.log("Sending payload to PHP:", payload);
+ 
+        fetch("purchase.php", {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type": "application/json"
+
+            },
+
+            body: JSON.stringify(payload)
+
+        })
+
+        .then(res => {
+
+            if (!res.ok) throw new Error("Network response was not OK");
+
+            return res.json();
+
+        })
+
+        .then(data => {
+
+            console.log("Response from PHP:", data);
+
+            alert(data.message);
+
+            localStorage.removeItem("cart");  // clear cart after successful order
+
+            displayCart(); // update the display (now empty)
+})
+
+        .catch(err => {
+
+            console.error("Error placing order:", err);
+
+            alert("Error placing order. Check console for details.");
+
+        });
+
     });
-}
-});
 </script>
-
+ 
 </body>
 </html>
+ 
