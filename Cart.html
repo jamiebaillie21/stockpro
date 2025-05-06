@@ -18,7 +18,19 @@ cart.html
     <button id="order-button">Order Now</button>
  
     <script>
+    // Create an unqiue User ID
+     function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
 
+let userID = generateUUID();
+console.log(userID);
+
+     
     // Function to display the cart items from localStorage
 
     function displayCart() {
@@ -125,7 +137,7 @@ cart.html
  
         const payload = {
 
-            user_id: user_id,
+            user_id: userID, // edited to call the var userID instead of user_id
 
             items: cart
 
